@@ -1,0 +1,1 @@
+import {Router} from "express"; import {asyncHandler} from "../utils/asyncHandler"; import {requireAuth} from "../middleware/auth"; import {createRequest,myRequests} from "../controllers/request.controller"; const r=Router();r.use(requireAuth);r.post("/",asyncHandler(createRequest));r.get("/",asyncHandler(myRequests));export default r;

@@ -1,0 +1,1 @@
+import {Router} from "express"; import {asyncHandler} from "../utils/asyncHandler"; import {getService,listServices} from "../controllers/service.controller"; const r=Router();r.get("/",asyncHandler(listServices));r.get("/:slug",asyncHandler(getService));export default r;

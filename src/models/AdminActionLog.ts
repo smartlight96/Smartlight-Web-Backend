@@ -1,0 +1,3 @@
+import {Schema,model,models,Document} from "mongoose";
+export interface IAdminActionLog extends Document{admin:Schema.Types.ObjectId;action:string;entityType:string;entityId?:Schema.Types.ObjectId;description:string;metadata:Record<string,unknown>;createdAt:Date}
+const s=new Schema<IAdminActionLog>({admin:{type:Schema.Types.ObjectId,ref:"User",required:true},action:{type:String,required:true},entityType:{type:String,required:true},entityId:{type:Schema.Types.ObjectId,default:null},description:{type:String,default:""},metadata:{type:Schema.Types.Mixed,default:{}}},{timestamps:true}); export const AdminActionLog=models.AdminActionLog||model<IAdminActionLog>("AdminActionLog",s);

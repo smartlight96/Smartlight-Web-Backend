@@ -1,0 +1,3 @@
+import {Schema,model,models,Document} from "mongoose";
+export interface IService extends Document{name:string;slug:string;description:string;category:string;priceFrom?:number;active:boolean;featured:boolean;createdAt:Date;updatedAt:Date}
+const s=new Schema<IService>({name:{type:String,required:true,trim:true,unique:true},slug:{type:String,required:true,unique:true,index:true},description:{type:String,required:true,maxlength:2000},category:{type:String,required:true},priceFrom:{type:Number,min:0},active:{type:Boolean,default:true},featured:{type:Boolean,default:false}},{timestamps:true}); export const Service=models.Service||model<IService>("Service",s);

@@ -1,0 +1,1 @@
+import {z} from "zod"; export const requestSchema=z.object({serviceId:z.string().min(1),title:z.string().min(3).max(150),description:z.string().min(5).max(5000),budget:z.string().max(100).optional()});

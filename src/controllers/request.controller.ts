@@ -1,0 +1,3 @@
+import {Response} from "express"; import {AuthRequest} from "../types/auth"; import {ServiceRequest} from "../models/ServiceRequest"; import {Service} from "../models/Service"; import {requestSchema} from "../validators/request";
+export async function createRequest(req:AuthRequest,res:Response){const d=requestSchema.parse(req.body);if(!await Service.findOne({_id:d.serviceId,active:true}))return res.status(404).json({message:"Service not found."});const r=await ServiceRequest.create({...d,userId:req.user!.userId});res.status(201).json({request:r});}
+export async function myRequests(req:AuthRequest,res:Response){const r=await ServiceRequest.find({userId:req.user!.userId}).populate("serviceId","name slug").sort({createdAt:-1}).lean();res.json({requests:r});}

@@ -1,0 +1,4 @@
+import {Schema,model,models,Document} from "mongoose";
+export type RequestStatus="PENDING"|"REVIEWING"|"IN_PROGRESS"|"COMPLETED"|"CANCELLED";
+export interface IServiceRequest extends Document{userId:Schema.Types.ObjectId;serviceId:Schema.Types.ObjectId;title:string;description:string;budget?:string;status:RequestStatus;adminNote?:string;createdAt:Date;updatedAt:Date}
+const s=new Schema<IServiceRequest>({userId:{type:Schema.Types.ObjectId,ref:"User",required:true,index:true},serviceId:{type:Schema.Types.ObjectId,ref:"Service",required:true},title:{type:String,required:true,trim:true,maxlength:150},description:{type:String,required:true,maxlength:5000},budget:{type:String,maxlength:100},status:{type:String,enum:["PENDING","REVIEWING","IN_PROGRESS","COMPLETED","CANCELLED"],default:"PENDING"},adminNote:{type:String,default:""}},{timestamps:true}); export const ServiceRequest=models.ServiceRequest||model<IServiceRequest>("ServiceRequest",s);

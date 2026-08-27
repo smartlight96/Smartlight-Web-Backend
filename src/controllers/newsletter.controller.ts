@@ -1,0 +1,5 @@
+import { Request, Response } from "express";
+import { NewsletterSubscriber } from "../models/NewsletterSubscriber";
+export async function subscribe(req:Request,res:Response){const email=String(req.body?.email??"").trim().toLowerCase();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return res.status(400).json({message:"Please provide a valid email address."});await NewsletterSubscriber.findOneAndUpdate({email},{email,active:true},{upsert:true,new:true,setDefaultsOnInsert:true});return res.status(201).json({success:true,message:"You are subscribed to SMARTLIGHT updates."});}
+export async function getSubscribers(_req:Request,res:Response){const subscribers=await NewsletterSubscriber.find().sort({createdAt:-1}).lean();return res.json({subscribers,total:subscribers.length});}
+export async function removeSubscriber(req:Request,res:Response){const deleted=await NewsletterSubscriber.findByIdAndDelete(req.params.id);if(!deleted)return res.status(404).json({message:"Subscriber not found."});return res.json({success:true});}
