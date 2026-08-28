@@ -57,10 +57,12 @@ const limiter = rateLimit({
 /*
  * Health check
  */
-app.get("/api/health", (_req, res) => {
+app.get("/", (_req, res) => {
   res.json({
-    ok: true,
-    service: "smartlight-api",
+    success: true,
+    message: "SMARTLIGHT Backend API is running",
+    status: "healthy",
+    version: "1.0.0",
   });
 });
 
